@@ -4,8 +4,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg'
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
+import OAuth from '../components/OAuth'
 
 const SignIn = () => {
+  // toggle type of input from text to password
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
@@ -16,6 +18,8 @@ const SignIn = () => {
 
   const navigate = useNavigate()
 
+  // handleChange was used in both email and password field
+  // change the state depended on id of the field
   const handleChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -29,12 +33,14 @@ const SignIn = () => {
     try {
       const auth = getAuth()
 
+      // check if user exists with auth getAuth function
       const userCredentials = await signInWithEmailAndPassword(
         auth,
         email,
         password
       )
 
+      // log in and navigate to home page
       if (userCredentials.user) {
         navigate('/')
       }
@@ -87,7 +93,7 @@ const SignIn = () => {
           </div>
         </form>
 
-        {/*Google OAuth*/}
+        <OAuth />
 
         <Link to="/sign-up" className="registerLink">
           Sign up instead

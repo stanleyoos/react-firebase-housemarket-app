@@ -9,17 +9,22 @@ import Offers from './pages/Offers'
 import Explore from './pages/Explore'
 import Profile from './pages/Profile'
 import ForgotPassword from './pages/ForgotPassword'
+import Category from './pages/Category'
 function App() {
   return (
     <>
       <Router>
         <Routes>
           <Route path="/" element={<Explore />} />
+          <Route path="/category/:categoryName" element={<Category />} />
           <Route path="/offers" element={<Offers />} />
+
+          {/*Profile is nested in PrivateRoute*/}
           <Route path="/profile" element={<PrivateRoute />}>
             {/*PrivateRoute has Outlet component which renders the child component*/}
             <Route path="/profile" element={<Profile />} />
           </Route>
+
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

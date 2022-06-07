@@ -10,6 +10,7 @@ import {
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
+import OAuth from '../components/OAuth'
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -43,16 +44,20 @@ const SignUp = () => {
 
       const user = userCredentials.user
 
+      // Updates a user's profile data
       updateProfile(auth.currentUser, {
         displayName: name,
       })
 
+      // copy the state, delete password field and add the timestamp
       const formDataCopy = { ...formData }
       delete formDataCopy.password
       formDataCopy.timestamp = serverTimestamp()
 
+      // send new user to the database
       await setDoc(doc(db, 'users', user.uid), formDataCopy)
 
+      // navigate to the homepage
       navigate('/')
     } catch (error) {
       toast.error('Something went wrong')
@@ -111,7 +116,7 @@ const SignUp = () => {
           </div>
         </form>
 
-        {/*Google OAuth*/}
+        <OAuth />
 
         <Link to="/sign-in" className="registerLink">
           Sign in instead

@@ -13,6 +13,8 @@ export const useAuthStatus = () => {
   useEffect(() => {
     if (isMounted) {
       const auth = getAuth()
+
+      // Adds an observer for changes to the user's sign-in state
       onAuthStateChanged(auth, (user) => {
         if (user) {
           setLoggedIn(true)
@@ -24,6 +26,8 @@ export const useAuthStatus = () => {
       isMounted.current = false
     }
   }, [isMounted])
+
+  // getAuth and onAuthStateChanged functions check the auth status
   return { loggedIn, checkingStatus }
 }
 
